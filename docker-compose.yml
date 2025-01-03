@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  suno-api:
+    image: suno-api
+    container_name: suno-api
+    ports:
+      - "3000:3000"
+    volumes:
+      - /mnt/media/suno-api:/app
+      - /mnt/media/aimusic_generator:/mnt/media/aimusic_generator
+    environment:
+      - SUNO_COOKIE=YOUR_SUNO_COOKIE_HERE
+
+  youtube-uploader:
+    image: youtube-uploader
+    container_name: youtube-uploader
+    volumes:
+      - /mnt/media/music_uploader:/app
+      - /mnt/media/aimusic_generator:/mnt/media/aimusic_generator
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json
+
+  music-generator:
+    image: music-generator
+    container_name: music-generator
+    volumes:
+      - /mnt/media/aimusic_generator:/mnt/media/aimusic_generator
+
+volumes:
+  aimusic_generator:
+    driver: local
+    driver_opts:
+      type: none
+      device: /mnt/media/aimusic_generator
+      o: bind
+  suno_api:
+    driver: local
+    driver_opts:
+      type: none
+      device: /mnt/media/suno-api
+      o: bind
+  music_uploader:
+    driver: local
+    driver_opts:
+      type: none
+      device: /mnt/media/music_uploader
+      o: bind
+
+
+      
