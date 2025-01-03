@@ -1,4 +1,0 @@
-# To run them all:
-docker build -t music-generator .
-docker build -t youtube-uploader .
-docker build -t suno-api .
