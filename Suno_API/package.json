@@ -1,0 +1,11 @@
+{
+    "name": "suno-api",
+    "version": "1.0.0",
+    "scripts": {
+      "start": "node server.js",
+      "build": "echo 'No build needed if this isn't a complex application'"
+    },
+    "dependencies": {
+      "express": "^4.17.1"
+    }
+  }

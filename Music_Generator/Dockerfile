@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Run the application
-CMD ["python", "main.py"]
+CMD ["python", "daily_song.py"]

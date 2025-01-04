@@ -9,8 +9,6 @@ services:
     volumes:
       - /mnt/media/suno-api:/app
       - /mnt/media/aimusic_generator:/mnt/media/aimusic_generator
-    environment:
-      - SUNO_COOKIE=YOUR_SUNO_COOKIE_HERE
 
   youtube-uploader:
     image: youtube-uploader
@@ -26,6 +24,17 @@ services:
     container_name: music-generator
     volumes:
       - /mnt/media/aimusic_generator:/mnt/media/aimusic_generator
+
+  ofelia:
+    image: mcuadros/ofelia:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/timezone:/etc/timezone:ro
+    command: daemon --docker
+    labels:
+      ofelia.job-exec.daily_music.schedule: "@daily"
+      ofelia.job-exec.daily_music.command: "docker exec music-generator python daily_song.py && docker exec youtube-uploader python youtube_uploader.py /mnt/media/aimusic_generator/last_generated_song.mp3"
+      ofelia.enabled: "true"
 
 volumes:
   aimusic_generator:
@@ -48,4 +57,3 @@ volumes:
       o: bind
 
 
-      
